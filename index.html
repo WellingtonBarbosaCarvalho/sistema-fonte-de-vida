@@ -21,6 +21,9 @@
             padding: 0;
             box-sizing: border-box;
         }
+    </script>
+</body>
+</html>
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -869,152 +872,39 @@
             justify-content: center;
         }
 
-        /* Garantir que o cupom apareça na impressão */
-        .receipt-content * {
-            color: #000 !important;
-            background: transparent !important;
-        }
-        
-        /* Força texto preto em todos os elementos do cupom */
-        .receipt-content,
-        .receipt-content div,
-        .receipt-content span,
-        .receipt-line,
-        .receipt-left,
-        .receipt-center,
-        .receipt-right,
-        .receipt-bold,
-        .receipt-small,
-        .receipt-medium,
-        .receipt-large,
-        .receipt-separator,
-        .receipt-item-line,
-        .receipt-total-line {
-            color: #000 !important;
-            -webkit-print-color-adjust: exact !important;
+        /* ===== ÁREA DE TEXTO PURO ===== */
+        .text-receipt-area {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.3;
+            white-space: pre-wrap;
+            min-height: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            word-break: break-all;
         }
 
-        /* Estilos de impressão - Cupom Não Fiscal CORRIGIDO */
-        @media print {
-            * {
-                -webkit-print-color-adjust: exact !important;
-                color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            
-            body {
-                margin: 0 !important;
-                padding: 0 !important;
-                background: white !important;
-                font-family: 'Courier New', monospace !important;
-            }
-            
-            body * {
-                visibility: hidden !important;
-            }
-            
-            .receipt-content,
-            .receipt-content *,
-            .receipt-content div,
-            .receipt-content span {
-                visibility: visible !important;
-                color: #000 !important;
-                background: transparent !important;
-                border-color: #000 !important;
-            }
-            
-            .receipt-content {
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 72mm !important;
-                max-width: 72mm !important;
-                margin: 0 !important;
-                padding: 2mm !important;
-                border: none !important;
-                box-shadow: none !important;
-                font-size: 9px !important;
-                line-height: 1.1 !important;
-                background: white !important;
-                color: #000 !important;
-            }
-            
-            .receipt-line,
-            .receipt-left,
-            .receipt-center,
-            .receipt-right {
-                color: #000 !important;
-                background: transparent !important;
-            }
-            
-            .receipt-bold {
-                font-weight: bold !important;
-                color: #000 !important;
-            }
-            
-            .receipt-small {
-                font-size: 8px !important;
-                color: #000 !important;
-            }
-            
-            .receipt-medium {
-                font-size: 10px !important;
-                color: #000 !important;
-            }
-            
-            .receipt-large {
-                font-size: 11px !important;
-                color: #000 !important;
-            }
-            
-            .receipt-separator {
-                color: #000 !important;
-                border: none !important;
-                background: transparent !important;
-            }
-            
-            .receipt-item-line {
-                color: #000 !important;
-                border: none !important;
-            }
-            
-            .receipt-total-line {
-                border-top: 1px solid #000 !important;
-                color: #000 !important;
-                font-weight: bold !important;
-                padding-top: 2px !important;
-            }
-            
-            /* Esconder elementos da interface */
-            .modal,
-            .modal-content,
-            .close-btn,
-            .btn,
-            button,
-            .modern-modal,
-            .container > *:not(.modal) {
-                display: none !important;
-                visibility: hidden !important;
-            }
-            
-            /* Mostrar apenas o conteúdo do recibo */
-            #receiptModal {
-                display: block !important;
-                visibility: visible !important;
-                position: static !important;
-                background: white !important;
-            }
-            
-            #receiptModal .modal-content {
-                display: block !important;
-                visibility: visible !important;
-                position: static !important;
-                background: white !important;
-                box-shadow: none !important;
-                border: none !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
+        .print-instructions {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .print-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
 
         /* Responsivo */
@@ -1332,23 +1222,54 @@
         </div>
     </div>
 
-    <!-- Modal de Nota -->
+    <!-- Modal de Nota - REFORMULADO PARA IMPRESSÃO TÉRMICA -->
     <div class="modal" id="receiptModal">
-        <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-content" style="max-width: 600px;">
             <button class="close-btn" onclick="closeReceiptModal()">&times;</button>
             <div class="modal-header">
-                <h2>🧾 Nota do Pedido</h2>
-                <p>Visualize e imprima a nota</p>
+                <h2>🖨️ Cupom para Impressora Térmica</h2>
+                <p>Texto puro formatado para impressora térmica</p>
             </div>
 
-            <div id="receiptContent" class="receipt-content">
-                <!-- Conteúdo da nota será gerado aqui -->
+            <!-- Instruções de impressão -->
+            <div class="print-instructions">
+                <h4>📋 COMO IMPRIMIR NO CHROME OS:</h4>
+                <strong>1. Baixar arquivo .txt:</strong> Clique em "Baixar .TXT" abaixo<br>
+                <strong>2. Abrir Terminal:</strong> Ctrl + Alt + T<br>
+                <strong>3. Comando:</strong> <code>cat /home/chronos/user/Downloads/cupom.txt > /dev/usb/lp1</code><br>
+                <strong>4. Alternativos:</strong> /dev/usb/lp0 ou verificar com <code>ls /dev/usb/</code>
             </div>
 
-            <div style="text-align: center; margin-top: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                <button class="btn btn-success" onclick="printReceipt()">🖨️ Imprimir</button>
-                <button class="btn" onclick="testPrint()" style="background: #ff9800; color: white;">🔍 Testar Impressão</button>
-                <button class="btn btn-primary" onclick="finishOrder()">✅ Finalizar Pedido</button>
+            <!-- Área de texto puro -->
+            <div class="text-receipt-area" id="textReceiptContent">
+                <!-- Conteúdo em texto puro será gerado aqui -->
+            </div>
+
+            <!-- Botões de ação -->
+            <div class="print-buttons">
+                <button class="btn btn-success" onclick="downloadReceiptTXT()">📥 Baixar .TXT</button>
+                <button class="btn btn-primary" onclick="copyReceiptText()">📋 Copiar Texto</button>
+                <button class="btn" onclick="previewTraditionalReceipt()" style="background: #ff9800; color: white;">👁️ Ver Cupom Visual</button>
+                <button class="btn btn-success" onclick="finishOrder()" style="background: #4CAF50;">✅ Finalizar Pedido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de visualização tradicional -->
+    <div class="modal" id="traditionalReceiptModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <button class="close-btn" onclick="closeTraditionalReceiptModal()">&times;</button>
+            <div class="modal-header">
+                <h2>👁️ Visualização do Cupom</h2>
+                <p>Pré-visualização visual (não é o que a impressora vai imprimir)</p>
+            </div>
+
+            <div id="traditionalReceiptContent" class="receipt-content">
+                <!-- Conteúdo visual será gerado aqui -->
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="closeTraditionalReceiptModal()">🔙 Voltar para Impressão</button>
             </div>
         </div>
     </div>
@@ -1387,8 +1308,6 @@
     </div>
 
     <script>
-        // ===== PROGRESSIVE WEB APP (PWA) =====
-        
         // ===== PROGRESSIVE WEB APP (PWA) =====
         
         // Detectar Chrome OS
@@ -1493,7 +1412,6 @@ OPÇÃO 3 - Launcher:
         window.addEventListener('appinstalled', () => {
             document.getElementById('installPrompt').style.display = 'none';
             document.getElementById('appStatus').textContent = '🚀 App Instalado';
-            localStorage.setItem('pwa-installed', 'true');
         });
 
         // Prompt de instalação
@@ -1515,11 +1433,6 @@ OPÇÃO 3 - Launcher:
                 document.getElementById('installPrompt').style.display = 'none';
             }
         });
-
-        // Verificar se já está instalado
-        if (localStorage.getItem('pwa-installed') === 'true' || window.matchMedia('(display-mode: standalone)').matches) {
-            document.getElementById('appStatus').textContent = '🚀 App Instalado';
-        }
 
         // Monitor de conectividade
         function updateOnlineStatus() {
@@ -1677,7 +1590,293 @@ OPÇÃO 3 - Launcher:
         };
         let editingProductId = null;
         let currentOrder = null;
+        let currentReceiptText = '';
         let db = null;
+
+        // ===== GERAÇÃO DE CUPOM EM TEXTO PURO =====
+        
+        function generatePlainTextReceipt(order) {
+            const now = new Date(order.date);
+            const orderNumber = order.id.slice(-6);
+            
+            // Função para centralizar texto
+            function centerText(text, width = 40) {
+                if (text.length >= width) return text;
+                const padding = Math.floor((width - text.length) / 2);
+                return ' '.repeat(padding) + text;
+            }
+            
+            // Função para alinhar à direita
+            function rightAlign(text, width = 40) {
+                if (text.length >= width) return text;
+                return ' '.repeat(width - text.length) + text;
+            }
+            
+            // Função para quebrar linha de produto
+            function formatProductLine(name, qty, price, total, width = 40) {
+                const maxNameLength = width - 15; // Espaço para quantidade e valores
+                if (name.length > maxNameLength) {
+                    name = name.substring(0, maxNameLength - 3) + '...';
+                }
+                
+                const qtyPriceStr = `${qty}x ${price.toFixed(2)}`;
+                const totalStr = total.toFixed(2);
+                const spaceNeeded = width - name.length - qtyPriceStr.length - totalStr.length;
+                const spaces = Math.max(1, spaceNeeded);
+                
+                return `${name}${' '.repeat(spaces)}${totalStr}`;
+            }
+            
+            let receipt = '';
+            
+            // Cabeçalho da empresa
+            receipt += centerText(settings.companyName.toUpperCase()) + '\n';
+            if (settings.companyCNPJ) {
+                receipt += centerText(`CNPJ: ${cnpjMask(settings.companyCNPJ)}`) + '\n';
+            }
+            if (settings.companyAddress) {
+                receipt += centerText(settings.companyAddress) + '\n';
+            }
+            if (settings.companyPhone) {
+                receipt += centerText(`Tel: ${phoneMask(settings.companyPhone)}`) + '\n';
+            }
+            
+            receipt += '\n';
+            receipt += '----------------------------------------\n';
+            receipt += centerText('CUPOM NAO FISCAL') + '\n';
+            receipt += centerText(`# ${orderNumber}`) + '\n';
+            receipt += '----------------------------------------\n';
+            receipt += '\n';
+            
+            // Data e hora
+            receipt += `Data: ${now.toLocaleDateString('pt-BR')}    Hora: ${now.toLocaleTimeString('pt-BR')}\n`;
+            receipt += '\n';
+            receipt += '........................................\n';
+            receipt += '\n';
+            
+            // Dados do cliente
+            receipt += 'CLIENTE:\n';
+            receipt += `${order.clientName}\n`;
+            if (order.clientPhone) {
+                receipt += `Tel: ${phoneMask(order.clientPhone)}\n`;
+            }
+            receipt += `${order.clientAddress}`;
+            if (order.clientComplement) {
+                receipt += `, ${order.clientComplement}`;
+            }
+            receipt += '\n';
+            if (order.clientNeighborhood) {
+                receipt += `${order.clientNeighborhood}\n`;
+            }
+            receipt += '\n';
+            receipt += '........................................\n';
+            receipt += '\n';
+            
+            // Produtos
+            receipt += 'PRODUTOS:\n';
+            order.items.forEach((item, index) => {
+                receipt += `${item.productName}\n`;
+                receipt += formatProductLine('', item.quantity, item.unitPrice, item.quantity * item.unitPrice) + '\n';
+                receipt += `${item.quantity} x R$ ${item.unitPrice.toFixed(2)}` + rightAlign(`R$ ${(item.quantity * item.unitPrice).toFixed(2)}`, 40 - `${item.quantity} x R$ ${item.unitPrice.toFixed(2)}`.length) + '\n';
+            });
+            
+            receipt += '\n';
+            receipt += '----------------------------------------\n';
+            
+            // Total
+            const totalLine = `TOTAL:` + rightAlign(`R$ ${order.total.toFixed(2)}`, 40 - 6);
+            receipt += totalLine + '\n';
+            receipt += '----------------------------------------\n';
+            receipt += '\n';
+            
+            // Observações
+            if (order.notes) {
+                receipt += 'OBS:\n';
+                receipt += `${order.notes}\n`;
+                receipt += '\n';
+                receipt += '........................................\n';
+                receipt += '\n';
+            }
+            
+            // Rodapé
+            receipt += centerText(settings.footerMessage) + '\n';
+            receipt += '\n';
+            receipt += '........................................\n';
+            receipt += '\n';
+            receipt += centerText(`${now.toLocaleDateString('pt-BR')} - ${now.toLocaleTimeString('pt-BR')}`) + '\n';
+            receipt += '\n';
+            receipt += centerText('* OBRIGADO E VOLTE SEMPRE *') + '\n';
+            
+            return receipt;
+        }
+
+        // ===== FUNÇÕES DE IMPRESSÃO TÉRMICA =====
+        
+        function showReceipt(order) {
+            // Gerar texto puro
+            currentReceiptText = generatePlainTextReceipt(order);
+            
+            // Mostrar no modal
+            document.getElementById('textReceiptContent').textContent = currentReceiptText;
+            document.getElementById('receiptModal').classList.add('active');
+        }
+
+        function downloadReceiptTXT() {
+            if (!currentReceiptText) {
+                showAlert('Nenhum cupom para baixar!', 'Erro', 'error');
+                return;
+            }
+            
+            // Criar blob com texto
+            const blob = new Blob([currentReceiptText], { type: 'text/plain;charset=utf-8' });
+            
+            // Criar link de download
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `cupom_${Date.now()}.txt`;
+            
+            // Fazer download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showToast('Arquivo cupom.txt baixado!\nUse: cat cupom.txt > /dev/usb/lp1', 'success', 'Download Concluído');
+        }
+
+        function copyReceiptText() {
+            if (!currentReceiptText) {
+                showAlert('Nenhum cupom para copiar!', 'Erro', 'error');
+                return;
+            }
+            
+            // Copiar para clipboard
+            navigator.clipboard.writeText(currentReceiptText).then(() => {
+                showToast('Texto do cupom copiado!\nCole no terminal ou editor de texto.', 'success', 'Texto Copiado');
+            }).catch(() => {
+                // Fallback para browsers antigos
+                const textArea = document.createElement('textarea');
+                textArea.value = currentReceiptText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast('Texto copiado (fallback method)', 'success', 'Texto Copiado');
+            });
+        }
+
+        function previewTraditionalReceipt() {
+            if (!currentOrder) {
+                showAlert('Nenhum pedido para visualizar!', 'Erro', 'error');
+                return;
+            }
+            
+            // Gerar visualização HTML tradicional
+            const traditionalReceiptContent = document.getElementById('traditionalReceiptContent');
+            const now = new Date(currentOrder.date);
+            const orderNumber = currentOrder.id.slice(-6);
+            
+            let receiptHTML = `
+<div class="receipt-center receipt-bold receipt-medium">${settings.companyName.toUpperCase()}</div>
+${settings.companyCNPJ ? `<div class="receipt-center receipt-small">CNPJ: ${cnpjMask(settings.companyCNPJ)}</div>` : ''}
+${settings.companyAddress ? `<div class="receipt-center receipt-small">${settings.companyAddress}</div>` : ''}
+${settings.companyPhone ? `<div class="receipt-center receipt-small">Tel: ${phoneMask(settings.companyPhone)}</div>` : ''}
+
+<div class="receipt-separator">----------------------------------------</div>
+
+<div class="receipt-center receipt-bold">CUPOM NAO FISCAL</div>
+<div class="receipt-center receipt-small"># ${orderNumber}</div>
+
+<div class="receipt-separator">----------------------------------------</div>
+
+<div class="receipt-left receipt-small">
+Data: ${now.toLocaleDateString('pt-BR')}    Hora: ${now.toLocaleTimeString('pt-BR')}
+</div>
+
+<div class="receipt-separator">........................................</div>
+
+<div class="receipt-left receipt-bold">CLIENTE:</div>
+<div class="receipt-left">${currentOrder.clientName}</div>
+${currentOrder.clientPhone ? `<div class="receipt-left receipt-small">Tel: ${phoneMask(currentOrder.clientPhone)}</div>` : ''}
+<div class="receipt-left receipt-small">${currentOrder.clientAddress}${currentOrder.clientComplement ? ', ' + currentOrder.clientComplement : ''}</div>
+${currentOrder.clientNeighborhood ? `<div class="receipt-left receipt-small">${currentOrder.clientNeighborhood}</div>` : ''}
+
+<div class="receipt-separator">........................................</div>
+
+<div class="receipt-left receipt-bold">PRODUTOS:</div>
+`;
+
+            currentOrder.items.forEach((item, index) => {
+                const itemTotal = item.quantity * item.unitPrice;
+                receiptHTML += `
+<div class="receipt-left">${item.productName}</div>
+<div class="receipt-item-line">
+    <span>${item.quantity} x R$ ${item.unitPrice.toFixed(2)}</span>
+    <span>R$ ${itemTotal.toFixed(2)}</span>
+</div>
+`;
+            });
+
+            receiptHTML += `
+<div class="receipt-separator">----------------------------------------</div>
+
+<div class="receipt-total-line">
+    <span class="receipt-large">TOTAL:</span>
+    <span class="receipt-large">R$ ${currentOrder.total.toFixed(2)}</span>
+</div>
+
+<div class="receipt-separator">----------------------------------------</div>
+`;
+
+            if (currentOrder.notes) {
+                receiptHTML += `
+<div class="receipt-left receipt-bold receipt-small">OBS:</div>
+<div class="receipt-left receipt-small">${currentOrder.notes}</div>
+
+<div class="receipt-separator">........................................</div>
+`;
+            }
+
+            receiptHTML += `
+<div class="receipt-center receipt-small">${settings.footerMessage}</div>
+
+<div class="receipt-separator">........................................</div>
+
+<div class="receipt-center receipt-small">
+${now.toLocaleDateString('pt-BR')} - ${now.toLocaleTimeString('pt-BR')}
+</div>
+
+<div class="receipt-center receipt-small">
+* OBRIGADO E VOLTE SEMPRE *
+</div>`;
+            
+            traditionalReceiptContent.innerHTML = receiptHTML;
+            document.getElementById('traditionalReceiptModal').classList.add('active');
+        }
+
+        function closeTraditionalReceiptModal() {
+            document.getElementById('traditionalReceiptModal').classList.remove('active');
+        }
+
+        async function finishOrder() {
+            if (currentOrder) {
+                orders.push(currentOrder);
+                await saveData();
+                
+                closeReceiptModal();
+                closeOrderModal();
+                loadClients();
+                
+                showToast('Pedido finalizado com sucesso!', 'success', 'Pedido Confirmado');
+                currentOrder = null;
+                currentReceiptText = '';
+            }
+        }
+
+        function closeReceiptModal() {
+            document.getElementById('receiptModal').classList.remove('active');
+        }
+
+        // ===== CONTINUAÇÃO DO SISTEMA ORIGINAL =====
 
         // Configuração do IndexedDB
         function initDatabase() {
@@ -1744,7 +1943,7 @@ OPÇÃO 3 - Launcher:
             return new Promise((resolve, reject) => {
                 const transaction = db.transaction([storeName], 'readwrite');
                 const store = transaction.objectStore(storeName);
-                const request = store.put(data); // Mudança: put() em vez de add()
+                const request = store.put(data);
                 
                 request.onsuccess = () => resolve();
                 request.onerror = () => reject(request.error);
@@ -1994,7 +2193,6 @@ Deseja continuar?`;
             }, 100);
         }
 
-        // Modal de pedido - função única atualizada
         function closeOrderModal() {
             document.getElementById('orderModal').classList.remove('active');
         }
@@ -2149,200 +2347,6 @@ Deseja continuar?`;
             showToast('Configurações salvas com sucesso!', 'success', 'Configurações');
         });
 
-        // Sistema de Cupom Não Fiscal - Estilo Tradicional
-        function showReceipt(order) {
-            const receiptContent = document.getElementById('receiptContent');
-            const now = new Date(order.date);
-            const orderNumber = order.id.slice(-6);
-            
-            let receiptHTML = `
-<div class="receipt-center receipt-bold receipt-medium">${settings.companyName.toUpperCase()}</div>
-${settings.companyCNPJ ? `<div class="receipt-center receipt-small">CNPJ: ${cnpjMask(settings.companyCNPJ)}</div>` : ''}
-${settings.companyAddress ? `<div class="receipt-center receipt-small">${settings.companyAddress}</div>` : ''}
-${settings.companyPhone ? `<div class="receipt-center receipt-small">Tel: ${phoneMask(settings.companyPhone)}</div>` : ''}
-
-<div class="receipt-separator">----------------------------------------</div>
-
-<div class="receipt-center receipt-bold">CUPOM NAO FISCAL</div>
-<div class="receipt-center receipt-small"># ${orderNumber}</div>
-
-<div class="receipt-separator">----------------------------------------</div>
-
-<div class="receipt-left receipt-small">
-Data: ${now.toLocaleDateString('pt-BR')}    Hora: ${now.toLocaleTimeString('pt-BR')}
-</div>
-
-<div class="receipt-separator">........................................</div>
-
-<div class="receipt-left receipt-bold">CLIENTE:</div>
-<div class="receipt-left">${order.clientName}</div>
-${order.clientPhone ? `<div class="receipt-left receipt-small">Tel: ${phoneMask(order.clientPhone)}</div>` : ''}
-<div class="receipt-left receipt-small">${order.clientAddress}${order.clientComplement ? ', ' + order.clientComplement : ''}</div>
-${order.clientNeighborhood ? `<div class="receipt-left receipt-small">${order.clientNeighborhood}</div>` : ''}
-
-<div class="receipt-separator">........................................</div>
-
-<div class="receipt-left receipt-bold">PRODUTOS:</div>
-`;
-
-            order.items.forEach((item, index) => {
-                const itemTotal = item.quantity * item.unitPrice;
-                receiptHTML += `
-<div class="receipt-left">${item.productName}</div>
-<div class="receipt-item-line">
-    <span>${item.quantity} x R$ ${item.unitPrice.toFixed(2)}</span>
-    <span>R$ ${itemTotal.toFixed(2)}</span>
-</div>
-`;
-            });
-
-            receiptHTML += `
-<div class="receipt-separator">----------------------------------------</div>
-
-<div class="receipt-total-line">
-    <span class="receipt-large">TOTAL:</span>
-    <span class="receipt-large">R$ ${order.total.toFixed(2)}</span>
-</div>
-
-<div class="receipt-separator">----------------------------------------</div>
-`;
-
-            if (order.notes) {
-                receiptHTML += `
-<div class="receipt-left receipt-bold receipt-small">OBS:</div>
-<div class="receipt-left receipt-small">${order.notes}</div>
-
-<div class="receipt-separator">........................................</div>
-`;
-            }
-
-            receiptHTML += `
-<div class="receipt-center receipt-small">${settings.footerMessage}</div>
-
-<div class="receipt-separator">........................................</div>
-
-<div class="receipt-center receipt-small">
-${now.toLocaleDateString('pt-BR')} - ${now.toLocaleTimeString('pt-BR')}
-</div>
-
-<div class="receipt-center receipt-small">
-* OBRIGADO E VOLTE SEMPRE *
-</div>`;
-            
-            receiptContent.innerHTML = receiptHTML;
-            document.getElementById('receiptModal').classList.add('active');
-        }
-
-        function printReceipt() {
-            // Garantir que o modal esteja visível
-            const modal = document.getElementById('receiptModal');
-            const receiptContent = document.getElementById('receiptContent');
-            
-            if (!modal.classList.contains('active')) {
-                showToast('Erro: Recibo não está aberto!', 'error');
-                return;
-            }
-            
-            // Método alternativo: criar janela específica para impressão
-            const printWindow = window.open('', '_blank', 'width=300,height=600');
-            
-            const printHTML = `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Cupom - ${settings.companyName}</title>
-    <style>
-        @page {
-            size: 80mm auto;
-            margin: 5mm;
-        }
-        
-        body {
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            line-height: 1.2;
-            color: #000;
-            background: white;
-            margin: 0;
-            padding: 5px;
-            width: 70mm;
-        }
-        
-        .receipt-center { text-align: center; margin: 2px 0; }
-        .receipt-left { text-align: left; margin: 2px 0; }
-        .receipt-right { text-align: right; margin: 2px 0; }
-        .receipt-bold { font-weight: bold; }
-        .receipt-small { font-size: 9px; }
-        .receipt-medium { font-size: 12px; }
-        .receipt-large { font-size: 14px; }
-        .receipt-separator { text-align: center; margin: 8px 0; }
-        
-        .receipt-item-line {
-            display: flex;
-            justify-content: space-between;
-            margin: 1px 0;
-            font-size: 10px;
-        }
-        
-        .receipt-total-line {
-            display: flex;
-            justify-content: space-between;
-            margin: 2px 0;
-            font-weight: bold;
-            border-top: 1px solid #000;
-            padding-top: 4px;
-        }
-    </style>
-</head>
-<body>
-    ${receiptContent.innerHTML}
-</body>
-</html>`;
-            
-            printWindow.document.write(printHTML);
-            printWindow.document.close();
-            
-            // Aguardar carregar e imprimir
-            printWindow.onload = function() {
-                setTimeout(() => {
-                    printWindow.print();
-                    printWindow.close();
-                }, 500);
-            };
-            
-            showToast('Abrindo janela de impressão...', 'info');
-        }
-
-        // Função para testar a pré-visualização
-        function testPrint() {
-            const receiptContent = document.getElementById('receiptContent');
-            if (receiptContent.innerHTML.trim() === '') {
-                showToast('Nenhum recibo para testar!', 'warning');
-                return;
-            }
-            
-            showToast('Testando impressão...', 'info');
-            printReceipt();
-        }
-
-        async function finishOrder() {
-            if (currentOrder) {
-                orders.push(currentOrder);
-                await saveData();
-                
-                closeReceiptModal();
-                closeOrderModal();
-                loadClients();
-                
-                showToast('Pedido finalizado com sucesso!', 'success', 'Pedido Confirmado');
-                currentOrder = null;
-            }
-        }
-
-        function closeReceiptModal() {
-            document.getElementById('receiptModal').classList.remove('active');
-        }
         function loadDashboard() {
             const today = new Date();
             const todayStr = today.toISOString().split('T')[0];
@@ -2649,19 +2653,3 @@ ${now.toLocaleDateString('pt-BR')} - ${now.toLocaleTimeString('pt-BR')}
                 }
             });
         }
-    </script>
-<script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                // Registration was successful
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, function(err) {
-                // registration failed :(
-                console.log('ServiceWorker registration failed: ', err);
-            });
-        });
-    }
-</script>
-</body>
-</html>
